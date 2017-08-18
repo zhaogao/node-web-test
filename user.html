@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>user count</title>
+</head>
+<body>
+	<p>用户访问了<span id="count">0</span>次</p>
+	<script>
+		var oSpan = document.querySelector('#count');
+		var cookie = document.cookie;
+		var count = cookie.split('=')[1];
+		oSpan.innerHTML= count;
+	</script>
+</body>
+</html>
