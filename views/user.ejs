@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>user count</title>
+	<style>
+		.headwrap{
+			width:140px;
+			height: 140px;
+			background: #ccc;
+			overflow: hidden;
+			border-radius: 50%;
+		}
+		.headwrap img{
+			height:100%;
+		}
+		.item{
+			float: left;
+			margin:10px;
+		}
+	</style>
+</head>
+<body>
+	<!-- <p>用户访问了<span id="count">0</span>次</p> -->
+	<% list.forEach(function(user){ %>
+		
+		<div class="item">
+			<p><%=user.name%></p>
+			<div class="headwrap" >
+				<img src="<%=user.head%>" alt="">
+			</div>
+		</div>
+	<%}) %>
+	<script>
+		var oSpan = document.querySelector('#count');
+		var olist = '<%= list%>';
+		// var cookie = document.cookie;
+		// var count = cookie.split('=')[1];
+		// oSpan.innerHTML= count;
+	</script>
+</body>
+</html>
