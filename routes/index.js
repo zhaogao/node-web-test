@@ -12,7 +12,7 @@ router.get('/',function(req,res){
 	res.render('index',{isLogin:req.session.user ? true :false})
 });
 
-router.route('/user',function(req,res){
+router.get('/user',function(req,res){
 	console.log('用户名',req.session.user)
 	pool.getConnection(function(err,connection){
 		connection.query('select * from user order by id desc',function(err,result){

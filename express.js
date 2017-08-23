@@ -38,9 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   port: '3306',                   
 //   database: 'test', 
 // }); 
-
-app.use('/login',user);
 app.use('/',routes);
+app.use('/',user);
+
 
 
 // app.use(function(req,res,next){

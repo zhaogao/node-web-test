@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>注册</title>
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/lib/bootstrap.min.css">
 	<style type="text/css">
 		.page{
 			width:560px;
@@ -22,8 +22,8 @@
 		}
 	</style>
 </head>
-<script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.8.0/js/md5.min.js"></script>
+<script src="js/lib/jquery-2.1.1.js"></script>
+<script src="js/lib/md5-min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('#uploadbtn').on('change',function(){
@@ -107,7 +107,7 @@
 			}
 			$.post('/get_info',{
 				name:$('#name').val().trim(),
-				pwd:md5($('#pwd').val().trim()),
+				pwd:hex_md5($('#pwd').val().trim()),
 				age:$('#age').val().trim(),
 				head:$('#uploadbtn').attr('_src')
 			},function(data){

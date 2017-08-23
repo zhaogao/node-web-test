@@ -6,6 +6,10 @@ router.get('/login',function(req,res){
 	res.render('login');
 });
 
+router.get('/download',function(req,res){
+	res.download('public/download/1234.xls');
+});
+
 router.route('/reg').get(function(req,res){
 	res.render('reg');
 }).post(function(req,res){
