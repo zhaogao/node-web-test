@@ -1,26 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>登录页</title>
-	<style>
-		.headwrap{
-			width:140px;
-			height: 140px;
-			background: #ccc;
-			overflow: hidden;
-			border-radius: 50%;
-		}
-		.headwrap img{
-			height:100%;
-		}
-		.item{
-			float: left;
-			margin:10px;
-		}
-	</style>
-</head>
-<body>
-	<h1>登录页</h1>
-</body>
-</html>
+
+<style>
+.form-horizontal{
+	width:400px;
+	margin:100px auto;
+	border:1px solid #dfdfdf;
+	border-radius: 8px;
+	padding: 40px 0 20px 0;
+	background: #fff;
+}
+.msg-error{
+	color:red;
+}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		$('#submit').on('click',function(ev){
+
+			ev.preventDefault();
+			$('[required]').format();
+			if($('.error').length>0){
+				return;
+			}
+
+			var postData={
+				name:$('#name').val().trim(),
+				pwd:hex_md5($('#pwd').val().trim()),
+			};
+			$.post('/login',postData,function(data){
+				console.log(data)
+				if(data.code==0){
+					$('#login-msg').text(data.ret_msg)
+				}else if(data.code==1){
+					location.href='/user';
+				}
+			});
+		})
+	})
+</script>
+
+<form class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" >用户名</label>
+		<div class="col-sm-8">
+			<input  class="form-control" required requiredMsg="请输入姓名" id="name" type="text" name="name" >
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" >密码</label>
+		<div class="col-sm-8">
+			<input class="form-control" required requiredMsg="请输入密码" id="pwd" type="text" name="pwd" >
+		</div>
+	</div>
+	<div class="form-group">
+		<span id="login-msg" class="msg-error" ></span>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-8">
+			<input class="btn btn-primary" type="button" id="submit" value="登录">
+		</div>
+	</div>
+</form>
