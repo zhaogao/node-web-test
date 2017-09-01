@@ -51,20 +51,22 @@
 
 		});
 
+		$('[required]').blur();
+
 		$('#submit').on('click',function(ev){
 			ev.preventDefault();
 			$('[required]').format();
 			if($('.error').length>0){
 				return;
 			}
-			$.post('/get_info',{
+			$.post('/reg',{
 				name:$('#name').val().trim(),
 				pwd:hex_md5($('#pwd').val().trim()),
 				age:$('#age').val().trim(),
 				head:$('#uploadbtn').attr('_src')
 			},function(data){
 				// console.log('data',data,data.code)
-				console.log('***',data.code)
+				console.log('***',data.code,data.ret_msg)
 				if(data.code==0){
 					location.href='/user';
 				}

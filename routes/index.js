@@ -3,13 +3,28 @@ var router = express.Router();
 var mysql  = require('mysql'); 
 var multer  = require('multer');
 var app = express();
-// var user = require('./user');
-
-// app.use('/login',user);
+var path = require('path');
 
 router.get('/',function(req,res){
-	// res.send('hello world')
-	res.render('index',{isLogin:req.session.user ? true :false})
+	pool.getConnection(function(err,connection){
+		connection.query('select * from user order by id desc',function(err,result){
+
+			connection.release();
+			if(err){
+				console.log('err',err.message)
+			}else{
+				console.log(result)
+				res.render('index', {
+					title: '主页',
+					user: req.session.user,
+					newList: result
+				})
+			}
+
+			
+		});
+	})
+	
 });
 
 router.get('/user',function(req,res){
@@ -21,7 +36,7 @@ router.get('/user',function(req,res){
 				console.log('err',err.message)
 			}else{
 				console.log(result)
-				res.render('user',{list:result});
+				res.render('user',{title:'用户列表',list:result,layout:'layout'});
 			}
 		});
 	})
@@ -61,10 +76,6 @@ router.post('/file_upload',upload.array('head'),function(req,res){
 	}
 
 });
-
-// router.get('/login',function(req,res){
-// 	res.render('login');
-// });
 
 module.exports = router;
 

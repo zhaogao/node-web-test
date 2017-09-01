@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>首页</title>
-	<style>
-	*{margin:0;padding:0;}
-		.header{
-			height: 60px;
-			background: #ccc;
-		}
-	</style>
-</head>
-<!-- <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script> -->
-<body>
-	<%- include header %>
-	<div>index</div>
-</body>
-</html>
+
+<%- include header %>
+<div class="wrap" >
+	<div class="main-content" >index</div>
+	<div class="nav-right">
+		<h5>最新加入用户列表</h5>
+		<ul class="user-list" >
+			<% newList.forEach( function(item, index) {%>
+				<li><img class="head-mini bk-mr-5" src="<%= item.head%>" alt=""><%= item.name%></li>
+			<% })%>
+			
+		</ul>
+	</div>
+</div>

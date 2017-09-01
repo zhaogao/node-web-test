@@ -10,6 +10,13 @@ $(function() {
 		reomve_error: function() {
 			$(this).siblings('.error').remove();
 		},
+		blur:function(){
+			$(this).each(function(){
+				$(this).on('blur keyup',function(){
+					$(this).format();
+				})
+			});
+		},
 		format: function() {
 
 			$(this).each(function() {

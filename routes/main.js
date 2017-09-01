@@ -21,7 +21,7 @@ router.route('/user',function(req,res){
 				console.log('err',err.message)
 			}else{
 				console.log(result)
-				res.render('user',{list:result});
+				res.render('user',{title:'用户列表',list:result,layout:'layout'});
 			}
 		});
 	})

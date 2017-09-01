@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>user count</title>
+
 	<style>
 		.headwrap{
 			width:140px;
@@ -19,8 +15,8 @@
 			margin:10px;
 		}
 	</style>
-</head>
-<body>
+
+
 	<!-- <p>用户访问了<span id="count">0</span>次</p> -->
 	<% list.forEach(function(user){ %>
 		
@@ -33,10 +29,8 @@
 	<%}) %>
 	<script>
 		var oSpan = document.querySelector('#count');
-		var olist = '<%= list%>';
+		// var olist = '<%= list%>';
 		// var cookie = document.cookie;
 		// var count = cookie.split('=')[1];
 		// oSpan.innerHTML= count;
 	</script>
-</body>
-</html>

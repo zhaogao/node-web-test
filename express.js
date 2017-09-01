@@ -3,11 +3,20 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+
+var redis = require('redis');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var expressLayout = require('express-ejs-layouts');
 // var fs = require('fs');
 var mysql  = require('mysql'); 
 var db = require('./db');
+
+var redisClient = redis.createClient({
+  host:'localhost',
+  port:6379,
+  // password:''
+})
 
 var app = express();
 var routes = require('./routes/index');
@@ -19,7 +28,10 @@ app.use(session({
     secret: 'secret',
     cookie:{ 
         maxAge: 1000*60*30
-    }
+    },
+    store:new RedisStore({
+      client:redisClient
+    })
 }));
 
 app.use(cookieParser());
@@ -42,23 +54,25 @@ global.pool = mysql.createPool({
   database: 'test', 
 }); 
 
-app.use(function(req,res,next){
-	console.log('ssss');
-	next();
-})
+var white_path = ['/','/reg'];
 
+var isLogin = function(req,res,next){
+  var route = req.path;
+  if(white_path.indexOf(route)>=0){
+    return next();
+  }
+  if(!req.session.user&&route.indexOf('login')<0){
+    res.redirect('/login');
+  }else{
+    next();
+  }
+}
+
+app.use(isLogin);
 app.use('/',routes);
 app.use('/',user);
 
-
-
-// app.use(function(req,res,next){
-// 	console.log('sss',!req.session.user)
-// 	if(!req.session.user){
-// 		res.redirect("/login");
-// 	}
-// 	next();
-// });
+//role 1.admin 2.normal 3.guest
 
 //404页面
 app.use(function(req,res,next){

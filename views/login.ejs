@@ -29,10 +29,11 @@
 			};
 			$.post('/login',postData,function(data){
 				console.log(data)
-				if(data.code==0){
+				if(data.code==1){
 					$('#login-msg').text(data.ret_msg)
-				}else if(data.code==1){
-					location.href='/user';
+				}else if(data.code==0){
+					$('#login-msg').text('')
+					location.href='/';
 				}
 			});
 		})
@@ -53,11 +54,15 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<span id="login-msg" class="msg-error" ></span>
+		<div class="col-sm-offset-3 col-sm-8">
+			<span id="login-msg" class="msg-error" ></span>
+		</div>
 	</div>
+	<a  href="/reg">注册</a>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-8">
 			<input class="btn btn-primary" type="button" id="submit" value="登录">
+			
 		</div>
 	</div>
 </form>

@@ -1,9 +1,15 @@
-<div class="header" >
-		<%if (isLogin) {%>
-			<a href="/loginout">退出</a>
-		<% } else { %>
-			<a href="/login">登录</a>
-			<a href="/reg">注册</a>
-		<%}%>
-		<a href="/download">下载</a>	
+<div class="header clearfix" >
+
+	<h1 class="pull-left title">简易博客系统</h1>
+	<div class="pull-right">
+	<%if (user) {%>
+		<span class="bk-mr-5" ><i class="glyphicon glyphicon-user bk-mr-5"></i><%=user%></span>
+		<a href="/loginout">退出</a>
+	<% } else { %>
+		<a href="/login">登录</a>
+		<a href="/reg">注册</a>
+	<%}%>
+
+	</div>
+
 </div>
