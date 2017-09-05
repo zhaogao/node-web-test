@@ -2,8 +2,12 @@
 
 	<h1 class="pull-left title">简易博客系统</h1>
 	<div class="pull-right">
+
 	<%if (user) {%>
-		<span class="bk-mr-5" ><i class="glyphicon glyphicon-user bk-mr-5"></i><%=user%></span>
+		<span class="bk-mr-5" ><i class="glyphicon glyphicon-user bk-mr-5"></i><%=user.name%></span>
+
+		<img class="head-mini bk-mr-5" src="<%= user.head%>" alt="">
+		<a href="/publish?type=add" ><i class="glyphicon glyphicon-pencil" ></i>开始写博客</a>
 		<a href="/loginout">退出</a>
 	<% } else { %>
 		<a href="/login">登录</a>

@@ -36,6 +36,11 @@
 					location.href='/';
 				}
 			});
+		});
+		$('.form-horizontal input').on('keydown',function(ev){
+			if(ev.keyCode==13){
+				$('#submit').trigger('click');
+			}
 		})
 	})
 </script>
@@ -58,7 +63,11 @@
 			<span id="login-msg" class="msg-error" ></span>
 		</div>
 	</div>
-	<a  href="/reg">注册</a>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-8">
+			<a  href="/reg">还没有账号？点击注册</a>
+		</div>
+	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-8">
 			<input class="btn btn-primary" type="button" id="submit" value="登录">

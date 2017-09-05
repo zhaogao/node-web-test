@@ -43,9 +43,16 @@ li{
 	right:0;
 	top:0;
 	width:200px;
-	// background:red;
 }
 
+.article-wrap{
+	width:960px;
+	margin:30px auto;
+}
+.article-area{
+	min-height:200px;
+	resize:vertical;
+}
 .nav-right .user-list{
 	border-top:1px solid #ccc;
 }

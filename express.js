@@ -9,7 +9,8 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var expressLayout = require('express-ejs-layouts');
 // var fs = require('fs');
-var mysql  = require('mysql'); 
+// var mysql  = require('mysql'); 
+var mysql = require('promise-mysql');
 var db = require('./db');
 
 var redisClient = redis.createClient({
@@ -27,10 +28,11 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(session({ 
     secret: 'secret',
     cookie:{ 
-        maxAge: 1000*60*30
+        maxAge: 1000*20
     },
     store:new RedisStore({
-      client:redisClient
+      client:redisClient,
+      ttl:1000*20
     })
 }));
 
@@ -58,15 +60,22 @@ var white_path = ['/','/reg'];
 
 var isLogin = function(req,res,next){
   var route = req.path;
+  app.locals.user = req.session.user;
   if(white_path.indexOf(route)>=0){
     return next();
   }
+
+  // if(!req.session.user){
+  //   res.sendStatus(499)
+  // }
+
   if(!req.session.user&&route.indexOf('login')<0){
     res.redirect('/login');
   }else{
+    
     next();
   }
-}
+};
 
 app.use(isLogin);
 app.use('/',routes);
@@ -87,4 +96,6 @@ var server = app.listen(8088,function(){
 	var host = server.address().address;
 	var port = server.address().port;
 	console.log('应用实例，访问地址为 http://%s:%s',host,port)
-})
+});
+
+module.exports = app;

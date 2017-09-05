@@ -1,14 +1,26 @@
 
 <%- include header %>
 <div class="wrap" >
-	<div class="main-content" >index</div>
+	
 	<div class="nav-right">
 		<h5>最新加入用户列表</h5>
 		<ul class="user-list" >
-			<% newList.forEach( function(item, index) {%>
+			<% newList.forEach( function(item, index) { %>
 				<li><img class="head-mini bk-mr-5" src="<%= item.head%>" alt=""><%= item.name%></li>
 			<% })%>
+
+			<% if(newList.length==0){%>
+				<li>暂无用户</li>
+			<%}%>
 			
+		</ul>
+	</div>
+	<div class="main-content" >
+		<h4>最新的博客</h4>
+		<ul>
+		  <% articleList.forEach((item)=>{%>
+		  	<li><%=item.title%></li>
+		  <%}) %>
 		</ul>
 	</div>
 </div>

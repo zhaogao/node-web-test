@@ -2,13 +2,12 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 
-
 router.route('/login').get(function(req,res){
 	res.render('login',{title:'登录',layout:'layout'});
 }).post(function(req,res){
 	pool.getConnection(function(err,connection){
-		connection.query('SELECT name,pwd FROM USER WHERE NAME='+connection.escape(req.body.name),function(err,result){
-			console.log('&&&&&&',err,result.length)
+		connection.query('SELECT name,pwd,head FROM USER WHERE NAME='+connection.escape(req.body.name),function(err,result){
+
 			if(err){
 				console.log(err)
 				res.send(500);
@@ -25,15 +24,12 @@ router.route('/login').get(function(req,res){
 						ret_msg:'密码错误'
 					});
 				}else{
-					req.session.user = result[0].name;
-
-					// res.location('/user');
+					req.session.user = result[0];
 
 					res.json({
 						code:0,
 						ret_msg:'登录成功'
-					})
-
+					});
 				}
 			}
 		})
@@ -59,7 +55,7 @@ router.route('/reg').get(function(req,res){
 	};
 
 	var sql = 'insert into user (name,pwd,age,head,role,create_time) values (?,?,?,?,?,?)';
-	// var result = db.mysql_create(sql);
+
 	pool.getConnection(function(err,connection){
 
 		//创建之前先确认没有改用户名
@@ -106,7 +102,7 @@ router.route('/reg').get(function(req,res){
 
 router.get('/loginout',function(req,res){
 	req.session.user = null;
-	res.redirect("/");
+	res.redirect("/login");
 });
 
 module.exports = router;
