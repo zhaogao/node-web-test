@@ -10,9 +10,9 @@ $(function() {
 		reomve_error: function() {
 			$(this).siblings('.error').remove();
 		},
-		blur:function(){
-			$(this).each(function(){
-				$(this).on('blur keyup',function(){
+		blur: function() {
+			$(this).each(function() {
+				$(this).on('blur keyup', function() {
 					$(this).format();
 				})
 			});
@@ -28,4 +28,14 @@ $(function() {
 			});
 		}
 	});
+	//全局ajax设置 
+	$.ajaxSetup({
+		complete: function(data){ //session失效就跳转登录页
+			if(data.responseJSON.ret_code&&data.responseJSON.ret_code==99){
+				var realWindow = window.top == window.self ? window.self : window.top
+				realWindow.location.href='/login';
+			}
+		}
+	});
+
 });

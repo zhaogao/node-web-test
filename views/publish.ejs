@@ -37,14 +37,7 @@
 
 <script>
 	$(function(){
-		$.ajaxSetup({  
-	        statusCode: {  
-	            499: function (data) {  
-	                window.location.href = data.responseText;  
-	            }  
-	        }  
-	    }); 
-		     
+
 		$('#submit').on('click',function(ev){
 			ev.preventDefault();
 			$('[required]').format();
@@ -56,7 +49,7 @@
 				category:$('#category').val(),
 				article:$('#article').val()
 			};
-			$.post('/publish',data,function(data){
+			$.post('/publish?type=add',data,function(data){
 				console.log(data)
 				if(data.code==0){
 					location.href="/";

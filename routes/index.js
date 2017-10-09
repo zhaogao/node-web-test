@@ -57,20 +57,6 @@ router.route('/publish').get(function(req, res) {
 		res.sendStatus(500);
 	});
 
-	// pool.getConnection(function(err,connection){
-	// 	connection.query('select * from articleCate',function(err,result){
-	// 		if(err){
-	// 			res.send(500);
-	// 		}else if(result&&result.length>0){
-	// 			res.render('publish',{
-	// 				title:'写博客',
-	// 				category:result,
-	// 				layout:'layout'
-	// 			})
-	// 		}
-	// 	});
-	// });
-
 }).post(function(req, res) {
 
 	var params = req.body;
@@ -79,7 +65,7 @@ router.route('/publish').get(function(req, res) {
 
 	if(req.query.type=='add'){ //新的才添加
 		pool.query(sql, [params.category, req.session.user.name, params.head, params.article, 0, 0, create_time]).then(function(rows) {
-
+			console.log('end',rows)
 			if(rows&&rows.affectedRows>0){
 				res.json({
 					code:0,

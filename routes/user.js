@@ -7,7 +7,7 @@ router.route('/login').get(function(req,res){
 }).post(function(req,res){
 	pool.getConnection(function(err,connection){
 		connection.query('SELECT name,pwd,head FROM USER WHERE NAME='+connection.escape(req.body.name),function(err,result){
-
+			res.setHeader('Content-Type', 'application/json')
 			if(err){
 				console.log(err)
 				res.send(500);

@@ -26,13 +26,15 @@ var user = require('./routes/user');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(session({ 
-    secret: 'secret',
+    secret: 'iclick2017',
     cookie:{ 
-        maxAge: 1000*20
+        maxAge: 1000*30*2
     },
+    resave: false, 
+    saveUninitialized: false,
     store:new RedisStore({
       client:redisClient,
-      ttl:1000*20
+      ttl:1000*30*2
     })
 }));
 
@@ -60,21 +62,28 @@ var white_path = ['/','/reg'];
 
 var isLogin = function(req,res,next){
   var route = req.path;
-  app.locals.user = req.session.user;
-  if(white_path.indexOf(route)>=0){
-    return next();
-  }
+  console.log('cookies',req.cookies,req.session.cookie.maxAge,req.sessionID)
+  if (!req.session.user) {
 
-  // if(!req.session.user){
-  //   res.sendStatus(499)
-  // }
-
-  if(!req.session.user&&route.indexOf('login')<0){
-    res.redirect('/login');
-  }else{
+    if (req.headers["x-requested-with"] != null && req.headers["x-requested-with"] == "XMLHttpRequest" && req.url != "/login") {
+      return res.json({
+        ret_code: 99,
+        ret_msg: '登录信息失效，请您重新登录'
+      });
+    }
     
+    if (req.path == "/login"||white_path.indexOf(route)>=0) {
+       next();
+    }else{
+       res.redirect('/login');
+    }
+
+  }else if(req.session.user){
     next();
   }
+  //全局user赋值
+  app.locals.user = req.session.user ?  req.session.user :'';
+
 };
 
 app.use(isLogin);

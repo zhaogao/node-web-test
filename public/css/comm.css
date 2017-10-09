@@ -35,7 +35,8 @@ li{
 }
 .main-content{
 	width:800px;
-	background:green;
+	min-height:600px;
+	// background:green;
 }
 
 .nav-right{
